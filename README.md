@@ -8,6 +8,7 @@ _Do the next steps only after making sure you already created and exported the l
 
 1. Create a [github account](https://github.com/join?source=header-home) if you don't have one yet.
 1. Fork [this repo](https://github.com/butchland/fastai-binder-app-template) as a template for your own binder app repository. You can [click on this link to generate your own copy.](https://github.com/butchland/fastai-binder-app-template/generate) 
+   * Make sure to rename your repo to something other than `fastai-binder-app-template`. Due to a github policy, `git-lfs` does not support uploads to public forks, which is what your repo will be if you name it the same as what you are copying from. For more info, please see [this issue](https://github.com/git-lfs/git-lfs/issues/1906). 
 1. Clone your newly created repository into the machine running your jupyter notebook (which can be either your local machine, Colab, Paperspace Gradient notebooks or your GCP, Sagemaker and other VM instances)
     * If you are running the notebooks on a standard jupyter notebook environment (e.g. Paperspace Gradient), you can create a terminal to run your git and shell commands. _(For Colab, no terminal environment is provided, so see the [special instructions](#special-instructions-for-colab))_
     ![](https://raw.githubusercontent.com/butchland/fastai-binder-app-template/master/images/create-jupyter-terminal.png)
