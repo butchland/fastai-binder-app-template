@@ -2,7 +2,7 @@
 This is a template github project for building your binder app based on [Lesson 3 of the fastai course v4](https://course.fast.ai/videos/?lesson=3) (2020) and also discussed in [Chapter 2](https://github.com/fastai/fastbook/blob/master/02_production.ipynb) of the book **"Deep Learning for Coders with fastai and Pytorch"** . This template is based on the [instructions posted on the fastai forums here](https://forums.fast.ai/t/deploying-your-notebook-as-an-app-under-10-minutes/70621?u=butchland).
 
 ## Instructions for Deploying to Binder
-_(Note that for Colab, see the [special instructions below](#special-instructions-for-colab) as it does not provide a terminal environment, nor does it run the ipywidgets or voila, and also does not persist your data across sessions)_
+_(Note that for Colab, see the [special instructions below](#special-instructions-for-colab) as it does not provide a terminal environment, nor does it run voila, and also does not persist your data across sessions)_
 
 _Do the next steps only after making sure you already created and exported the learner (`export.pkl`) and your stripped down voila app notebook is ready (preferably tested in a jupyter notebook environment with voila)._
 
