@@ -57,18 +57,59 @@ You can add your stripped down notebook manually as detailed in the [instruction
 ### Running git and shell commands
 In order to run shell and git commands on Colab, you can create a new cell and
 add a `%%bash` on the first line. You can then add any git or shell commands after the first line and execute it as a pseudo terminal.
+
+* First, `cd` into your `/content` directory
+```
+%cd /content
+```
+* Install `git-lfs` by following the [instructions here](https://github.com/git-lfs/git-lfs/wiki/Installation)
+* Clone your repo into your Colab VM
 ```
 %%bash
-cd /content
 git config --global user.name "<Your name>"
 git config --global user.email "<email@address>"
-git clone git@github.com:/<your-github-id>/<your-copy-of-fastai-binder-app-template>.git
-cd <your-copy-of-fastai-binder-app-template>
-cp ../export.pkl
+git clone https://github.com/<your-github-id>/<your-copy-of-fastai-binder-app-template>.git
+```
+* cd into your local git repo
+```
+%cd <your-copy-of-fastai-binder-app-template>
+```
+* Add and commit your exported learner into your local repo
+```
+%%bash
+cp ../export.pkl .
 git add export.pkl
 git commit -m "Add exported learner"
+```
+
+### Pushing your notebook to Github
+Due to some weird limitations, Colab does not allow ssh access from your Colab VM to your github repo, thus requiring the use of 'https://github.com:...' format for pulling and pushing your git repo. 
+
+The problem is that when trying to push your changes back, executing `git push` in a jupyter notebook cell triggers an error as well.
+
+The solution is to use the `git credentials` command to store your credentials so that `git` will use the credentials without asking for a prompt (a prompt asking for your userid/password triggers an  error on Colab since we are not running these commands on a terminal)
+
+* To configure `git` to use our stored credentials, we need to configure our local repo settings by running the following command
+```
+%%bash
+git config credential.helper store
+```
+* Then we create a `.git-credentials` file in the home directory `/root` containing our github user id and password in the format `https://<github-userid>:<password>@github.com`
+
+```
+%%bash
+echo "https:<github-userid>:<password>@github.com" > /root/.git-credentials
+```
+
+_Note that this is a **MASSIVE SECURITY HOLE** since your github password is stored in plain text. **Please delete both the cell containing this in the jupyter notebook as well as the `.git-credentials` file itself after you've pushed your changes.**._
+
+* Run the `git push` command
+```
+%%bash
 git push
 ```
+
+Your github repo should now contain the exported learner (`export.pkl`).
 
 ### Adding your stripped down voila app notebook 
 
@@ -82,9 +123,11 @@ Please make sure to pick the right repository to save your stripped down voila n
 
 ### Saving your repo and other files
 
-Unfortunately, Colab is not your standard Jupyter environment and does not support Ipywidgets and voila natively so there is no easy way to test your stripped down voila notebook prior to deploying it on github repo and running on binder.
+Unfortunately, Colab is not your standard Jupyter environment and does not support voila natively so there is no easy way to test your stripped down voila notebook prior to deploying it on github repo and running on binder. 
 
-Also, because Colab does not persist your VM instance storage across sessions, please connect your Google Drive and copy your data including the cloned repository, your exported learner (`export.pkl`) and any ssh keys created to your Google Drive. For Colab, your ssh keys are located in `/root/.ssh` and your cloned repository is (by default) created in the `/content` directory.
+_Note: As of 9/17/2020, the ipywidgets (including the image cleaner) are now runnable on Colab, just not the voila app._
+
+Also, because Colab does not persist your VM instance storage across sessions, please connect your Google Drive and copy your downloaded data, your cloned repository and your exported learner (`export.pkl`). By default, your exported learner and your cloned repository will be created in the `/content` directory.
 
 **Big thanks to [@vikbehal](https://forums.fast.ai/u/vikbehal) for providing the instructions!**
 
